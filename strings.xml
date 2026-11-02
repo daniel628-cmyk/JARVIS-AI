@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NEXORA AI</string>
+    <string name="tagline">Your Personal AI Assistant</string>
+
+    <string name="status_online">SYSTEM ONLINE</string>
+    <string name="status_listening">LISTENING...</string>
+    <string name="status_unavailable">VOICE SERVICE UNAVAILABLE</string>
+
+    <string name="greeting">Hello. I am NEXORA AI.</string>
+    <string name="talk_button">TALK TO NEXORA AI</string>
+    <string name="you_prefix">You: %1$s</string>
+    <string name="assistant_prefix">NEXORA AI: %1$s</string>
+
+    <string name="reply_hello">Hello. How can I assist you?</string>
+    <string name="reply_name">I am NEXORA AI, your personal assistant.</string>
+    <string name="reply_time">The current time is %1$s.</string>
+    <string name="reply_opening">Opening %1$s.</string>
+    <string name="reply_not_installed">%1$s is not installed.</string>
+    <string name="reply_fallback">I heard you. My AI brain will be connected in the next version.</string>
+    <string name="reply_no_speech">I did not catch that. Please try again.</string>
+</resources>
