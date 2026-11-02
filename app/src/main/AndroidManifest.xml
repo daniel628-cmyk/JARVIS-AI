@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:label="JARVIS"
+        android:label="NEXORA AI"
         android:theme="@android:style/Theme.Material.NoActionBar">
 
         <activity
