@@ -1,3 +1,4 @@
+
 package com.nexora.ai
 
 import android.app.Activity
@@ -23,9 +24,9 @@ class MainActivity : Activity(), TextToSpeech.OnInitListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        statusText = findViewById<TextView>(R.id.statusText)
-        responseText = findViewById<TextView>(R.id.responseText)
-        talkButton = findViewById<Button>(R.id.talkButton)
+        statusText = findViewById(R.id.statusText)
+        responseText = findViewById(R.id.responseText)
+        talkButton = findViewById(R.id.talkButton)
 
         commandProcessor = CommandProcessor(
             this,
@@ -104,9 +105,14 @@ class MainActivity : Activity(), TextToSpeech.OnInitListener {
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             val result = tts?.setLanguage(Locale.US)
+
             ttsReady = result != null &&
                 result != TextToSpeech.LANG_MISSING_DATA &&
                 result != TextToSpeech.LANG_NOT_SUPPORTED
+
+            if (ttsReady) {
+                tts?.setSpeechRate(1.15f)
+            }
         }
     }
 
