@@ -1,4 +1,3 @@
-
 package com.jarvis.ai
 
 import android.app.Activity
@@ -31,7 +30,7 @@ class MainActivity : Activity(), TextToSpeech.OnInitListener {
         }
 
         val title = TextView(this).apply {
-            text = "J.A.R.V.I.S."
+            text = "NEXORA AI"
             textSize = 32f
             setTextColor(Color.rgb(255, 50, 50))
             gravity = Gravity.CENTER
@@ -45,14 +44,14 @@ class MainActivity : Activity(), TextToSpeech.OnInitListener {
         }
 
         response = TextView(this).apply {
-            text = "Good evening. I am JARVIS."
+            text = "Good evening. I am NEXORA AI."
             textSize = 18f
             setTextColor(Color.WHITE)
             gravity = Gravity.CENTER
         }
 
         val mic = Button(this).apply {
-            text = "🎙  TALK TO JARVIS"
+            text = "🎙  TALK TO NEXORA AI"
             textSize = 18f
             setTextColor(Color.WHITE)
             setBackgroundColor(Color.rgb(160, 20, 20))
@@ -127,7 +126,7 @@ class MainActivity : Activity(), TextToSpeech.OnInitListener {
                 "Hello. How can I assist you?"
 
             text.contains("your name") ->
-                "I am JARVIS, your personal assistant."
+                "I am NEXORA AI, your personal assistant."
 
             text.contains("time") ->
                 "The current time is ${
@@ -155,7 +154,7 @@ class MainActivity : Activity(), TextToSpeech.OnInitListener {
                 "I heard you. My AI brain will be connected in the next version."
         }
 
-        response.text = "JARVIS: $answer"
+        response.text = "NEXORA AI: $answer"
         speak(answer)
     }
 
@@ -164,7 +163,7 @@ class MainActivity : Activity(), TextToSpeech.OnInitListener {
             text,
             TextToSpeech.QUEUE_FLUSH,
             null,
-            "JARVIS_RESPONSE"
+            "NEXORA_RESPONSE"
         )
     }
 
