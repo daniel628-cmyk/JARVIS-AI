@@ -28,3 +28,14 @@ kotlin {
         jvmTarget.set(JvmTarget.JVM_17)
     }
 }
+
+// sherpa-onnx is downloaded into app/libs by the GitHub Actions build.
+// It is only added when the file exists, so the build keeps working
+// until the workflow step is in place.
+val sherpaAar = file("libs/sherpa-onnx-1.12.40.aar")
+
+dependencies {
+    if (sherpaAar.exists()) {
+        implementation(files(sherpaAar))
+    }
+}
