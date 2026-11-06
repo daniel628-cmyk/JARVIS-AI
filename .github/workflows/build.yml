@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+env:
+  SHERPA_VERSION: "1.12.40"
+  KWS_MODEL: sherpa-onnx-kws-zipformer-gigaspeech-3.3M-2024-01-01
+
 jobs:
   build:
     name: Build NEXORA AI APK
@@ -43,6 +47,32 @@ jobs:
           test -f app/src/main/AndroidManifest.xml
           test -f app/src/main/java/com/nexora/ai/MainActivity.kt
 
+      - name: Fetch sherpa-onnx AAR and keyword model
+        run: |
+          mkdir -p app/libs app/src/main/assets/kws work
+
+          curl -fL --retry 3 -o "app/libs/sherpa-onnx-${SHERPA_VERSION}.aar" \
+            "https://github.com/k2-fsa/sherpa-onnx/releases/download/v${SHERPA_VERSION}/sherpa-onnx-${SHERPA_VERSION}.aar"
+
+          curl -fL --retry 3 -o work/model.tar.bz2 \
+            "https://github.com/k2-fsa/sherpa-onnx/releases/download/kws-models/${KWS_MODEL}.tar.bz2"
+          tar xf work/model.tar.bz2 -C work
+
+          SRC="work/${KWS_MODEL}"
+          cp "$SRC"/*int8*.onnx app/src/main/assets/kws/
+          cp "$SRC/tokens.txt" app/src/main/assets/kws/
+          cp "$SRC/bpe.model" app/src/main/assets/kws/
+
+          for part in encoder decoder joiner; do
+            ls app/src/main/assets/kws/${part}*int8*.onnx > /dev/null \
+              || { echo "MISSING ${part} int8 model file"; exit 1; }
+          done
+
+          echo "---- app/libs"
+          ls -lh app/libs
+          echo "---- app/src/main/assets/kws"
+          ls -lh app/src/main/assets/kws
+
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace --no-daemon
 
@@ -50,6 +80,10 @@ jobs:
         run: |
           test -f app/build/outputs/apk/debug/app-debug.apk
           ls -lh app/build/outputs/apk/debug/app-debug.apk
+          echo "---- model assets and native libs inside the APK"
+          unzip -l app/build/outputs/apk/debug/app-debug.apk | grep -E "assets/kws|\.so$" || true
+          unzip -l app/build/outputs/apk/debug/app-debug.apk | grep -q "assets/kws/tokens.txt"
+          unzip -l app/build/outputs/apk/debug/app-debug.apk | grep -q "assets/kws/bpe.model"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
